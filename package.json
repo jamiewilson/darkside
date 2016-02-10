@@ -1,7 +1,7 @@
 {
-  "name": "n1-darkside",
+  "name": "Darkside",
   "theme": "Darkside",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A customizable, dark sidebar theme for Nylas N1",
   "license": "MIT",
   "engines": {
