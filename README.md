@@ -50,3 +50,5 @@ To customize Darkside, open `darkside/styles/darkside.less` in a text editor.
 // @sidebar: #3A1E15;
 // @accent: #F6AA1C;
 ```
+
+Let me know if you have questions or suggestions. 
