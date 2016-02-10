@@ -1,7 +1,7 @@
 # Darkside
 A customizable, dark sidebar theme for [Nylas N1](https://nylas.com/n1).
 
-[![Default Theme](./images/default.png)](./examples/default.png)
+[![Default Theme](./images/default.png)](./images/default.png)
 
 [See other example themes →](http://jamiewilson.io/darkside)
 
