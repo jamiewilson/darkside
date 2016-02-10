@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Darkside — A customizable, dark sidebar theme for Nylas N1</title>
+  <meta name="description" content="A customizable, dark sidebar theme for Nylas N1">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link href="img/favicon.png" rel="shortcut icon">
+  <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body class="default-bg">
+  <main>
+  <h1 class="h1">Darkside</h1>
+  <h2 class="h2 mb-60">A customizable, dark sidebar theme for <a href="https://nylas.com/n1">Nylas N1</a></h2>
+  <a href="https://github.com/jamiewilson/darkside" class="button flex-center mb-60">
+    <svg class="download-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15"><path class="default-fill" d="M4 6h3v-6h2v6h3l-4 4-4-4zm11-4h-4v1h4v8h-14v-8h4v-1h-4c-.5 0-1 .5-1 1v9c0 .5.5 1 1 1h5.3c-.2.6-.9 1.4-2.3 2h8c-1.5-.6-2.1-1.4-2.3-2h5.3c.5 0 1-.5 1-1v-9c0-.5-.5-1-1-1z"/></svg>
+    Download It On GitHub
+  </a>
+  <p class="mb-30">Some example color schemes:</p>
+
+  <div id="default" class="current-theme theme-wrap flex-row">
+    <div class="theme-swatch flex-center mb-15">
+      <div class="theme-primary flex-center">
+        <div class="theme-accent"></div>
+      </div>
+    </div>
+    <div class="code code-wrap flex-column">
+      <p class="bright">Default</p>
+      <p>@sidebar: #313042;</p>
+      <p>@accent: #F18260;</p>
+    </div>
+  </div>
+
+  <div id="luna" class="theme-wrap flex-row">
+    <div class="theme-swatch flex-center mb-15">
+      <div class="theme-primary luna-primary flex-center">
+        <div class="theme-accent luna-accent"></div>
+      </div>
+    </div>
+    <div class="code code-wrap flex-column">
+      <p class="bright">Luna</p>
+      <p>@sidebar: #202C46;</p>
+      <p>@accent: #39DFF8;</p>
+    </div>
+  </div>
+
+  <div id="zond" class="theme-wrap flex-row">
+    <div class="theme-swatch flex-center mb-15">
+      <div class="theme-primary zond-primary flex-center">
+        <div class="theme-accent zond-accent"></div>
+      </div>
+    </div>
+    <div class="code code-wrap flex-column">
+      <p class="bright">Zond</p>
+      <p>@sidebar: #333333;</p>
+      <p>@accent: #F6D49C;</p>
+    </div>
+  </div>
+  <div class="byline">Created by <a href="http://jamiewilson.io">Jamie Wilson</a></div>
+</main>
+
+<div class="screenshot-wrap">
+  <img id="default-screenshot" class="current-screenshot screenshot" src="img/default.png" alt="Darkside Default">
+  <img id="luna-screenshot" class="screenshot" src="img/luna.png" alt="Darkside Luna">
+  <img id="zond-screenshot" class="screenshot" src="img/zond.png" alt="Darkside Zond">
+</div>
+
+  <script src="js/main.min.js"></script>
+</body>
+</html>
