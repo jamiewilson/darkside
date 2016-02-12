@@ -166,7 +166,8 @@ body {
   background-color: @threadlist-bg;
 }
 
-.list-container .list-item.focused {
+.list-container .list-item.focused,
+.thread-list.handler-split .list-item.selected {
   background: fade(@accent, 10%);
   color: @active-thread-text;
 }
@@ -207,10 +208,6 @@ body.is-blurred .list-container .list-item.focused {
 .thread-list .focused .mail-important-icon,
 .draft-list .focused .mail-important-icon {
   -webkit-filter: none;
-}
-
-.thread-list.handler-split .list-item.selected {
-  background: @accent;
 }
 
 .empty-state .generic .message {
