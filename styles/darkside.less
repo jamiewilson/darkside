@@ -3,16 +3,16 @@
 //====================================================
 
 // Default
-@sidebar: #313042;
-@accent: #F18260;
+// @sidebar: #313042;
+// @accent: #F18260;
 
 // Luna
 // @sidebar: #202C46;
 // @accent: #39DFF8;
 
 // Zond
-// @sidebar: #333333;
-// @accent: #F6D49C;
+@sidebar: #333333;
+@accent: #F6D49C;
 
 // Gemini
 // @sidebar: #00203C;
@@ -51,7 +51,7 @@ body {
 .preferences-sidebar,
 .preferences-content,
 .column-DraftList {
-  padding-top: 50px;
+  padding-top: 38px;
   background: @messagelist-bg;
 }
 
@@ -65,6 +65,10 @@ body {
   background: transparent;
   border: none;
   box-shadow: none;
+}
+
+.platform-linux .sheet-toolbar .btn.btn-toolbar.item-compose {
+  order: 101;
 }
 
 .sheet-toolbar .btn.btn-toolbar.item-compose img.content-mask {
@@ -258,6 +262,10 @@ body.is-blurred .list-container .list-item.focused {
 
 .sheet-toolbar .message-toolbar-items {
   margin-right: 11.25px;
+}
+
+.sheet-toolbar .selection-bar {
+  height: 38px;
 }
 
 .mode-toggle.mode-false .content-mask {
