@@ -51,7 +51,7 @@ body {
 .preferences-sidebar,
 .preferences-content,
 .column-DraftList {
-  padding-top: 50px;
+  padding-top: 38px;
   background: @messagelist-bg;
 }
 
@@ -69,6 +69,10 @@ body {
   background: transparent;
   border: none;
   box-shadow: none;
+  order: 101;
+}
+
+.platform-linux .sheet-toolbar .btn.btn-toolbar.item-compose {
   order: 101;
 }
 
@@ -271,6 +275,10 @@ body.is-blurred .list-container .list-item.focused {
   margin-right: 11.25px;
 }
 
+.sheet-toolbar .selection-bar {
+  height: 38px;
+}
+
 .mode-toggle.mode-false .content-mask {
   background-color: @accent;
 }
@@ -284,7 +292,7 @@ body.is-blurred .list-container .list-item.focused {
 [data-reactid=".0.0.1.$=1$1=02Thread=02toolbar.$0"] {
   background-image: none;
   background-color: #e9e9e9;
-  min-height: 50px;
+  min-height: 38px;
 }
 
 //====================================================
@@ -315,7 +323,7 @@ body.is-blurred .list-container .list-item.focused {
 
 .notifications-sticky .notifications-sticky-item {
   background-color: @accent;
-  line-height: 50px;
+  line-height: 38px;
   border: none;
 }
 
