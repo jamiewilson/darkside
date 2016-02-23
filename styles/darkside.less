@@ -28,7 +28,7 @@
 
 @threadlist-bg: #FFFFFF;
 @messagelist-bg: #F7F7F7;
-@active-thread-text: #231F20;
+@active-thread-text: @sidebar;
 @sidebar-text: desaturate(lighten(@sidebar, 50%), 75%);
 @active-sidebar-text: #FFFFFF;
 @account-switcher-bg: lighten(@sidebar, 5%);
@@ -221,6 +221,12 @@ body {
 //  Thread List
 //====================================================
 
+
+.thread-list .focused,
+.draft-list .focused {
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 .column-ThreadList,
 .list-container .list-item {
   background-color: @threadlist-bg;
@@ -240,8 +246,10 @@ body.is-blurred .list-container .list-item.focused {
   background: fade(@sidebar, 10%);
 }
 
+.thread-list .list-column,
+.draft-list .list-column,
 .list-container .list-item.focused .list-column {
-  border-bottom: 1px solid rgba(221, 221, 221, 0.6);
+  border-bottom: 1px solid fade(@sidebar, 10%);
 }
 
 .list-tabular .list-tabular-item.keyboard-cursor .list-column:first-child {
@@ -267,6 +275,27 @@ body.is-blurred .list-container .list-item.focused {
 .draft-list .focused .draft-icon,
 .thread-list .focused .mail-important-icon,
 .draft-list .focused .mail-important-icon {
+  -webkit-filter: none;
+}
+
+.thread-list .focused .mail-label,
+.draft-list .focused .mail-label {
+  -webkit-filter: brightness(100%) !important;
+  box-shadow: inset 0 0 0 1px fade(@accent, 50%) !important;
+  background-color: fade(@accent, 25%) !important;
+  color: @sidebar !important;
+}
+
+.thread-list .list-item:hover .list-column-HoverActions .inner,
+.thread-list .list-item.focused:hover .list-column-HoverActions .inner {
+  background-image: -webkit-linear-gradient(left, fade(@messagelist-bg, 0%) 0%, @messagelist-bg 50%, @messagelist-bg 100%);
+}
+
+.thread-list .list-item.focused:hover .list-column-HoverActions .inner .action.action-trash {
+  background: url("../static/images/thread-list-quick-actions/ic-quick-button-trash@2x.png") center no-repeat, linear-gradient(to top, rgba(241, 241, 241, 0.75) 0%, rgba(253, 253, 253, 0.75) 100%);
+}
+
+.thread-list .list-item.focused:hover .list-column-HoverActions .inner .action {
   -webkit-filter: none;
 }
 
