@@ -1,5 +1,5 @@
 //====================================================
-//  Color Variables
+//  Theme Variables
 //====================================================
 
 // Default
@@ -27,58 +27,68 @@
 // @accent: #F6AA1C;
 
 @threadlist-bg: #FFFFFF;
-@messagelist-bg: #F7F7F7;
+@messagelist-bg: tint(@sidebar, 95%);
 @active-thread-text: @sidebar;
-@sidebar-text: desaturate(lighten(@sidebar, 50%), 75%);
+@sidebar-text: desaturate(lighten(@sidebar, 40%), 75%);
 @active-sidebar-text: #FFFFFF;
-@account-switcher-bg: lighten(@sidebar, 5%);
-@account-switcher-hover-bg: darken(@account-switcher-bg, 10%);
-@invalid: #FF4136;
 @border-color: fade(@sidebar, 10%);
+@close: #FF5F56;
+@minimize: #FBD852;
+@maximize: #8DD07D;
+@swipe-archive: #8DD07D;
+@swipe-snooze: #FBD852;
+@invalid: @close;
+
+@sidebar-margin: 15px;
 
 //====================================================
-//  Base Overwrites
+//  Main Sidebar
 //====================================================
 
-body {
-  -webkit-font-smoothing: subpixel-antialiased;
-}
-
+// Make sidebar and corresponding toolbar match
 .column-RootSidebar,
-.column-ThreadList,
-.column-MessageList,
-.column-MessageListSidebar,
-.preferences-sidebar,
-.preferences-content,
-.column-DraftList {
-  padding-top: 50px;
-  background: @messagelist-bg;
-}
-
-.column-RootSidebar,
-.account-sidebar {
+.account-sidebar,
+.sheet-toolbar-container [data-column='0'] {
+  height: 100%;
   background-color: @sidebar;
+  // If NOT Retina display, subpixel-antialias fonts instead
+  @media
+    not screen and (-webkit-min-device-pixel-ratio: 1.3),
+    not screen and (-o-min-device-pixel-ratio: 13/10),
+    not screen and (min-resolution: 120dpi) {
+      -webkit-font-smoothing: subpixel-antialiased !important;
+  }
 }
 
-.sheet-toolbar-container [data-column='0'] .item-container {
-  justify-content: flex-end;
+// Refactored this to make sure all items
+// in sidebar always align left with each other
+.account-sidebar {
+  // make absolute elements (like compose button)
+  // relate to the sidear, not the column
+  position: relative;
+  margin: @sidebar-margin;
 }
 
-.sheet-toolbar .btn.btn-toolbar.item-compose {
-  margin-right: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  order: 101;
-}
-
-.sheet-toolbar .btn.btn-toolbar.item-compose img.content-mask {
-  background-color: @sidebar-text;
+.nylas-outline-view {
+  margin-bottom: @sidebar-margin;
 }
 
 //====================================================
 //  Window Controls
 //====================================================
+
+// Match alignment for toolbar above sidebar
+.sheet-toolbar-container [data-column='0'] {
+  padding-left: @sidebar-margin;
+  padding-right: @sidebar-margin;
+}
+
+.toolbar-window-controls {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
 
 .toolbar-window-controls button {
   background-color: @sidebar-text;
@@ -87,6 +97,8 @@ body {
   height: 12px;
   float: none;
   opacity: 0.5;
+  margin: 0;
+  margin-right: 5px;
   transform: scaleY(0.5);
   border-radius: 2px;
   transition-duration: 150ms;
@@ -100,27 +112,18 @@ body {
 }
 
 .toolbar-window-controls .close {
-  background-color: #FC625D;
+  background-color: @close;
   background-image: none;
-  &:hover {
-    -webkit-filter: brightness(125%);
-  }
 }
 
 .toolbar-window-controls .minimize {
-  background-color: #FEC041;
+  background-color: @minimize;
   background-image: none;
-  &:hover {
-    -webkit-filter: brightness(125%);
-  }
 }
 
 .toolbar-window-controls .maximize {
-  background-color: #35CA4A;
+  background-color: @maximize;
   background-image: none;
-  &:hover {
-    -webkit-filter: brightness(125%);
-  }
 }
 
 .is-blurred {
@@ -131,56 +134,111 @@ body {
   }
 }
 
+// Compose Button Overrides
+.sheet-toolbar .btn.btn-toolbar.item-compose {
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.5;
+  padding: 0;
+  margin-right: 0;
+  transition: opacity 200ms;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// Compose button icon color
+.sheet-toolbar .btn.btn-toolbar.item-compose img.content-mask {
+  background-color: @sidebar-text;
+}
+
 //====================================================
-//  Sidebar & Account Switcher
+//  Sidebar Items
 //====================================================
 
-.account-switcher {
-  top: 5px;
-}
-
-.account-switcher img {
-  -webkit-filter: brightness(5);
-}
-
-.account-sidebar .item,
-.account-sidebar .item.selected {
-  color: @sidebar-text;
-}
-
-.account-sidebar .item {
-  font-size: 13px;
-  font-weight: 400;
-}
-
+// Section headers
 .account-sidebar .heading {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: fade(@sidebar-text, 50%);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  padding: 0;
 }
 
-.account-sidebar .item img.content-mask,
-.account-sidebar .add-item-button img {
+// Down arrow icon
+.account-switcher {
+  height: 16px;
+  width: 16px;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  transition: opacity 200ms;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// Down arrow icon
+.account-switcher img {
+  zoom: 1 !important;
+  max-width: 10px;
+  max-height: 6px;
+  transform: none;
+  background-image: none;
   background-color: @sidebar-text;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-image: url(nylas://Darkside/images/down-arrow.svg);
+}
+
+.account-sidebar .item,
+.account-sidebar .item.selected {
+  color: @sidebar-text;
+  font-size: 13px;
+  font-weight: 400;
+  padding-right: 0;
 }
 
 .account-sidebar .item.selected {
-  background: @sidebar;
+  background: transparent;
   color: @active-sidebar-text;
+}
+
+// Item expansion icon wrapper
+.disclosure-triangle {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  width: 15px;
+}
+
+// Item expansion icon
+.disclosure-triangle div {
+  border-left-color: fade(@sidebar-text, 50%);
+  border-top-width: 3px;
+  border-bottom-width: 3px;
+  border-left-width: 5px;
+  transform-origin: 2px;
+}
+
+//====================================================
+//  Sidebar Icons
+//====================================================
+
+.account-sidebar .item img.content-mask,
+.account-sidebar .add-item-button img, {
+  background-color: @sidebar-text;
 }
 
 .account-sidebar .item.selected img.content-mask {
   background-color: @active-sidebar-text;
 }
 
-.nylas-outline-view .item-container {
-  padding-left: 4px;
-}
-
 .nylas-outline-view .item-container.dropping {
-  background: darken(@sidebar, 5%);
+  background: transparent;
 }
 
 .nylas-outline-view .item-container.dropping .item {
@@ -195,14 +253,6 @@ body {
   background: fade(@sidebar-text, 50%);
 }
 
-.disclosure-triangle div {
-  border-left-color: fade(@sidebar-text, 50%);
-  border-top-width: 3px;
-  border-bottom-width: 3px;
-  border-left-width: 5px;
-  transform-origin: 2px;
-}
-
 //====================================================
 //  Sidebar Count Badges
 //====================================================
@@ -213,179 +263,239 @@ body {
 }
 
 .nylas-outline-view .item .item-count-box {
-    color: @accent;
-    box-shadow: 0 0.5px 0 @accent, 0 -0.5px 0 @accent, 0.5px 0 0 @accent, -0.5px 0 0 @accent;
-  }
-
-//====================================================
-//  Thread List
-//====================================================
-
-
-.thread-list .focused,
-.draft-list .focused {
-  -webkit-font-smoothing: subpixel-antialiased;
-}
-
-.column-ThreadList,
-.list-container .list-item {
-  background-color: @threadlist-bg;
-}
-
-.list-container .list-item.focused,
-.thread-list.handler-split .list-item.selected {
-  background: fade(@accent, 10%);
-  color: @active-thread-text;
-}
-
-.list-container .list-item:hover {
-  background: fade(@sidebar, 5%);
-}
-
-body.is-blurred .list-container .list-item.focused {
-  background: fade(@sidebar, 10%);
-}
-
-.thread-list .list-column,
-.draft-list .list-column,
-.list-container .list-item.focused .list-column {
-  border-bottom: 1px solid fade(@sidebar, 10%);
-}
-
-.list-tabular .list-tabular-item.keyboard-cursor .list-column:first-child {
-  border-left-color: @accent;
-}
-
-.thread-list .thread-icon.thread-icon-unread,
-.draft-list .thread-icon.thread-icon-unread {
-  background-color: @accent;
-  background-image: none;
-  border-radius: 50%;
-  height: 10px;
-  width: 10px;
-  margin-top: 8px;
-  margin-left: 7px;
-  margin-right: 13px;
-  margin-bottom: 8px;
-}
-
-.thread-list .focused .thread-icon,
-.draft-list .focused .thread-icon,
-.thread-list .focused .draft-icon,
-.draft-list .focused .draft-icon,
-.thread-list .focused .mail-important-icon,
-.draft-list .focused .mail-important-icon {
-  -webkit-filter: none;
-}
-
-.thread-list .focused .mail-label,
-.draft-list .focused .mail-label {
-  -webkit-filter: brightness(100%) !important;
-  box-shadow: inset 0 0 0 1px fade(@accent, 50%) !important;
-  background-color: fade(@accent, 25%) !important;
-  color: @sidebar !important;
-}
-
-.thread-list .list-item:hover .list-column-HoverActions .inner,
-.thread-list .list-item.focused:hover .list-column-HoverActions .inner {
-  background-image: -webkit-linear-gradient(left, fade(@messagelist-bg, 0%) 0%, @messagelist-bg 50%, @messagelist-bg 100%);
-}
-
-.thread-list .list-item.focused:hover .list-column-HoverActions .inner .action.action-trash {
-  background: url("../static/images/thread-list-quick-actions/ic-quick-button-trash@2x.png") center no-repeat, linear-gradient(to top, rgba(241, 241, 241, 0.75) 0%, rgba(253, 253, 253, 0.75) 100%);
-}
-
-.thread-list .list-item.focused:hover .list-column-HoverActions .inner .action {
-  -webkit-filter: none;
-}
-
-.empty-state .generic .message {
-  font-size: 18px;
-  line-height: 1.2;
-}
-
-.thread-list.handler-split .list-item.selected .thread-icon,
-.thread-list.handler-split .list-item.selected .draft-icon,
-.thread-list.handler-split .list-item.selected .mail-important-icon {
-  -webkit-filter: none;
+  color: @accent;
+  box-shadow: inset 0 0 0 1px fade(@accent, 50%);
 }
 
 //====================================================
-//  Message List
-//====================================================
-
-#message-list {
-  background: @messagelist-bg;
-}
-
-.column-MessageList {
-  background-color: @messagelist-bg;
-  border-left: 1px solid @border-color;
-}
-
-.column-MessageListSidebar {
-  border-right: 1px solid @border-color;
-}
-
-//====================================================
-//  Scrollbars & Resize Handles
+//  Scrollbar Base & Sidebar Scrollbar
 //====================================================
 
 .scrollbar-track {
-  background-color: transparent;
+  background: transparent;
   width: 10px;
   border-left: none;
+  transition-delay: none;
+}
+
+.scrollbar-track .scrollbar-handle {
+  background: fade(@sidebar, 20%);
+  border: none;
 }
 
 .flexbox-handle-horizontal div {
   border-right: none;
 }
 
+// we now offset the margin on scrollbar
+// in sidebar since it's position: relative
+.account-sidebar .scrollbar-track {
+  margin-right: -@sidebar-margin;
+}
+
+// and lighten the handle background
+.account-sidebar .scrollbar-track .scrollbar-handle {
+  background: fade(lighten(@sidebar, 50%), 40%);
+}
+
 //====================================================
-//  Toolbars
+//  Thread List
 //====================================================
 
-.sheet-toolbar {
-  border: none;
-  height: 0;
-  min-height: 0;
+// Make corresponding toolbar match threadlist background
+.column-ThreadList,
+.sheet-toolbar-container [data-column='1'] {
+  height: 100%;
+  background: @threadlist-bg;
 }
 
-.sheet-toolbar .message-toolbar-items {
-  margin-right: 11.25px;
+.list-tabular .list-tabular-item {
+  background-color: @threadlist-bg;
+  border-bottom: 1px solid @border-color !important;
 }
 
-.mode-toggle.mode-false .content-mask {
-  background-color: @accent;
+// Using !important so multiple selection actions
+.list-tabular .list-tabular-item:hover {
+  background: tint(@sidebar, 95%) !important;
 }
 
-[data-reactid=".0.0.$0=2Threads=2toolbar.$1.0"] {
-  background-color: #FFFFFF;
-  border-bottom: 1px solid @border-color;
+.list-container .list-item.focused,
+.list-container .list-item.selected,
+.thread-list.handler-split .list-item.selected {
+  background: tint(@accent, 90%);
+  color: @active-thread-text;
 }
 
-[data-reactid=".0.0.1.$=1$1=02Preferences=02toolbar"],
-[data-reactid=".0.0.1.$=1$1=02Thread=02toolbar.$0"] {
+body.is-blurred .list-container .list-item.focused,
+body.is-blurred .list-container .list-item.selected,
+body.is-blurred .thread-list.handler-split .list-item.selected {
+  background: tint(@sidebar, 90%);
+  color: @active-thread-text;
+}
+
+.list-tabular .list-tabular-item.keyboard-cursor {
+  border-left-color: @accent;
+  background: tint(@accent, 90%);
+}
+
+body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
+  border-left-color: tint(@sidebar, 70%);
+}
+
+//====================================================
+//  Search & Suggestion Menu
+//====================================================
+
+.search-bar {
+  margin: 7.5px;
+  width: 100%;
+}
+
+.menu .content-container {
+  background: @messagelist-bg;
+  box-shadow: none !important;
+  margin-top: 5px !important;
+  border-radius: 3px;
+}
+
+.menu .item.selected, .menu .item:active,
+.search-container .content-container .item.selected {
+  background: @accent;
+}
+
+//====================================================
+//  Thread Icons
+//====================================================
+
+.thread-list .focused .thread-icon,
+.draft-list .focused .thread-icon,
+.thread-list .focused .draft-icon,
+.draft-list .focused .draft-icon,
+.thread-list .focused .mail-important-icon,
+.draft-list .focused .mail-important-icon,
+.thread-list.handler-split .list-item.selected .thread-icon,
+.thread-list.handler-split .list-item.selected .draft-icon,
+.thread-list.handler-split .list-item.selected .mail-important-icon {
+    -webkit-filter: none !important;
+}
+
+.thread-list .thread-icon {
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 12px;
+  -webkit-mask-position: center;
+}
+
+.thread-list .thread-icon.thread-icon-unread {
   background-image: none;
-  background-color: #e9e9e9;
-  min-height: 50px;
+  background-color: @accent;
+  -webkit-mask-image: url(../static/images/thread-list/icon-unread-@2x.png);
+}
+
+.thread-list .list-item:hover .thread-icon.thread-icon-unread {
+  background-color: tint(@sidebar);
+  -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
+  &:hover { background-color: tint(@sidebar, 20%); }
+}
+
+.thread-list .thread-icon.thread-icon-star {
+  background-color: tint(@sidebar);
+  -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
+}
+
+.thread-list .list-item:hover .thread-icon-none {
+  background-image: none;
+  background-color: tint(@sidebar);
+  -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
+}
+
+.thread-list .list-item:hover .thread-icon-none:hover {
+  background-image: none;
+  background-color: tint(@sidebar, 20%);
+  -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
+}
+
+.thread-icon.thread-icon-attachment {
+  opacity: 0.5;
+  background-size: 12px;
+}
+
+.thread-list .list-item:hover .list-column-HoverActions .inner,
+.thread-list .list-item.focused:hover .list-column-HoverActions .inner,
+.thread-list .list-item.selected:hover .list-column-HoverActions .inner,
+.thread-list.handler-split .list-item.selected:hover .list-column-HoverActions .inner {
+  background-image: -webkit-linear-gradient(left, fade(@messagelist-bg, 0%) 0%, @messagelist-bg 40%, @messagelist-bg 100%);
+}
+
+.thread-list .list-item.focused:hover .list-column-HoverActions .inner .action,
+.thread-list.handler-split .list-item.selected:hover .list-column-HoverActions .inner .action {
+  -webkit-filter: none;
+}
+
+.thread-list .list-item.focused:hover .list-column-HoverActions .inner .action.action-trash {
+  background: url("../static/images/thread-list-quick-actions/ic-quick-button-trash@2x.png") center no-repeat, linear-gradient(to top, rgba(241, 241, 241, 0.75) 0%, rgba(253, 253, 253, 0.75) 100%);
+}
+
+//====================================================
+//  Swiping
+//====================================================
+
+.thread-list .swipe-backing.swipe-archive,
+.draft-list .swipe-backing.swipe-archive {
+  background: @swipe-archive;
+  &.confirmed {
+    background: saturate(@swipe-archive, 10%);
+  }
+}
+
+.thread-list .swipe-backing.swipe-snooze,
+.draft-list .swipe-backing.swipe-snooze {
+  background: @swipe-snooze;
+  &.confirmed {
+    background: saturate(@swipe-snooze, 10%);
+  }
+}
+
+//====================================================
+//  Mail Labels
+//====================================================
+
+.thread-list .focused .mail-label, .draft-list .focused .mail-label,
+.thread-list.handler-split .list-item.selected .mail-label {
+  background: @accent !important;
+  color: white !important;
+  box-shadow: none !important;
+  -webkit-filter: none !important;
+}
+
+//====================================================
+//  Message List & Corresponding Toolbar
+//====================================================
+
+#message-list {
+  background: @messagelist-bg;
+}
+
+// Make toolbars match panels
+.column-MessageList,
+.sheet-toolbar-container [data-column='2'],
+.column-MessageListSidebar,
+.sheet-toolbar-container [data-column='3']  {
+  height: 100%;
+  background: @messagelist-bg;
+  border-left: 1px solid @border-color;
 }
 
 //====================================================
 //  Preferences
 //====================================================
 
-.preferences-wrap .preferences-content > .scroll-region-content {
-  padding-bottom: 100px;
+.preferences-sidebar,
+.preferences-content {
+  background: @messagelist-bg;
 }
 
-//====================================================
-//  Menu Dropdowns
-//====================================================
-
-.menu .item.selected, .menu .item:active,
-.search-container .content-container .item.selected {
-  background: @accent;
+.preferences-wrap .preferences-content > .scroll-region-content {
+  padding-bottom: 100px;
 }
 
 //====================================================
@@ -414,41 +524,25 @@ body.is-blurred .list-container .list-item.focused {
 }
 
 //====================================================
-//  Feedback Button
+//  Drafts & Selection List
 //====================================================
 
-.btn-feedback {
-  background: @accent;
-  border: none;
-  box-shadow: none;
-  cursor: pointer;
-  font-size: 16px;
-  height: 30px;
-  line-height: 30px;
-  opacity: 0.5;
-  width: 30px;
-  transition: opacity 200ms, background 200ms;
+// Make corresponding toolbar match threadlist background
+.draft-list {
+  background: @messagelist-bg;
+  border-top: 1px solid @border-color;
 }
 
-.btn-feedback:hover {
-  background: @accent;
-  opacity: 1;
-}
-
-//====================================================
-//  Drafts
-//====================================================
-
-.list-container .list-item.selected {
-  background: fade(@accent, 5%);
-}
-
-.list-container .list-item.selected .list-column {
-  border-bottom-color: fade(@accent, 20%);
-}
-
-.list-tabular .list-tabular-item.selected .checkmark .inner {
+.draft-list .list-tabular .list-tabular-item.selected .checkmark .inner {
   background-color: @accent;
+  background-image: url(nylas://Darkside/images/checkmark.svg);
+  background-size: 8px 6px;
+}
+
+// Make draft-list items slightly darker on hover
+// Using !important so multiple selection actions
+.draft-list .list-tabular .list-tabular-item:hover {
+  background: tint(@sidebar, 90%) !important;
 }
 
 .empty-state {
@@ -475,12 +569,65 @@ body.is-blurred .list-container .list-item.focused {
   background: @invalid;
 }
 
-textarea:focus,
-input[type="text"]:focus,
-input[type="email"]:focus {
-  border: 1px solid @accent;
+.btn.btn-emphasis {
+  background: @accent;
+  border: none;
+}
+
+//====================================================
+//  Toolbars Bar
+//====================================================
+
+.sheet-toolbar {
+  border: none;
+}
+
+.sheet-toolbar-container {
+  background: transparent;
   box-shadow: none;
-  padding-left: 0px;
-  padding-right: 0px;
-  min-width: 30px;
+  border: none;
+}
+
+.sheet-toolbar .selection-bar .absolute {
+  left: 0;
+  right: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.sheet-toolbar-container.mode-popout,
+// mode-list toolbar
+[data-reactid=".1.0.1.$=1$1=02Thread=02toolbar"] [data-column='0'],
+// Preferences toolbar
+[data-reactid=".1.0.1.$=1$1=02Preferences=02toolbar"] [data-column='0'] {
+  background-image: none;
+  background-color: tint(@sidebar, 90%);
+}
+
+.sheet-toolbar-container.mode-popout [data-column='0'] {
+  background: transparent;
+}
+
+// Removing from flow to center title below
+.layout-mode-popout .toolbar-window-controls {
+  margin-top: 0;
+  width: 50px;
+}
+
+.sheet-toolbar .item-container .window-title {
+  position: static;
+  // compensate for width of .toolbar-window-controls
+  transform: translateX(-25px);
+}
+
+.sheet-toolbar .btn-toolbar {
+  box-shadow: 0 0 0 1px @border-color;
+}
+
+.sheet-toolbar .message-toolbar-items {
+  margin-right: 11.25px;
+}
+
+.btn-toolbar.mode-toggle.mode-false img.content-mask {
+  background-color: @accent;
 }
