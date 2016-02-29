@@ -307,6 +307,7 @@
 .sheet-toolbar-container [data-column='1'] {
   height: 100%;
   background: @threadlist-bg;
+  border-bottom: 1px solid @border-color;
 }
 
 .list-tabular .list-tabular-item {
@@ -373,7 +374,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 .thread-list.handler-split .list-item.selected .thread-icon,
 .thread-list.handler-split .list-item.selected .draft-icon,
 .thread-list.handler-split .list-item.selected .mail-important-icon {
-    -webkit-filter: none !important;
+  -webkit-filter: none !important;
 }
 
 .thread-list .thread-icon {
@@ -527,7 +528,11 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 // Make corresponding toolbar match threadlist background
 .draft-list {
   background: @messagelist-bg;
-  border-top: 1px solid @border-color;
+}
+
+.draft-list .list-tabular .list-tabular-item .checkmark .inner {
+  background-color: white;
+  border-color: tint(@sidebar, 75%);
 }
 
 .draft-list .list-tabular .list-tabular-item.selected .checkmark .inner {
@@ -540,10 +545,6 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 // Using !important so multiple selection actions
 .draft-list .list-tabular .list-tabular-item:hover {
   background: tint(@sidebar, 90%) !important;
-}
-
-.empty-state {
-  top: -50px;
 }
 
 //====================================================
