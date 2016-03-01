@@ -39,6 +39,7 @@
 @swipe-snooze: #FBD852;
 @invalid: @close;
 
+// Used in sidebar and the toolbar above it
 @sidebar-margin: 15px;
 
 //====================================================
@@ -194,7 +195,7 @@
   background-image: none;
   background-color: @sidebar-text;
   -webkit-mask-repeat: no-repeat;
-  -webkit-mask-image: url(nylas://Darkside/images/down-arrow.svg);
+  -webkit-mask-image: url(nylas://darkside-master/images/down-arrow.svg);
 }
 
 .account-sidebar .item,
@@ -392,6 +393,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 //  Thread Icons
 //====================================================
 
+// Remove inverted color effects
 .thread-list .focused .thread-icon,
 .draft-list .focused .thread-icon,
 .thread-list .focused .draft-icon,
@@ -404,35 +406,42 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   -webkit-filter: none !important;
 }
 
+// Base settings for replacing backgrounds with -webkit-filters for easier color changes
 .thread-list .thread-icon {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 12px;
   -webkit-mask-position: center;
 }
 
+// Change color of unread dot icon
 .thread-list .thread-icon.thread-icon-unread {
   background-image: none;
   background-color: @accent;
   -webkit-mask-image: url(../static/images/thread-list/icon-unread-@2x.png);
 }
 
+// replace undread icon with star icon on thread item hover
 .thread-list .list-item:hover .thread-icon.thread-icon-unread {
   background-color: tint(@sidebar);
   -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
   &:hover { background-color: tint(@sidebar, 20%); }
 }
 
-.thread-list .thread-icon.thread-icon-star {
+// Replace outlined star icon with solid one
+.thread-list .thread-icon.thread-icon-star,
+.thread-list .thread-icon-star-on-hover:hover {
   background-color: tint(@sidebar);
   -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
 }
 
+// for Read messages, use the solid star on item hover as well
 .thread-list .list-item:hover .thread-icon-none {
   background-image: none;
   background-color: tint(@sidebar);
   -webkit-mask-image: url(../static/images/thread-list/icon-star-@2x.png);
 }
 
+// Make the star a bit darker on direct hover
 .thread-list .list-item:hover .thread-icon-none:hover {
   background-image: none;
   background-color: tint(@sidebar, 20%);
@@ -444,6 +453,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   background-size: 12px;
 }
 
+// The gradient behind threadlist hover icons (Snooze, Arvhive Delete)
 .thread-list .list-item:hover .list-column-HoverActions .inner,
 .thread-list .list-item.focused:hover .list-column-HoverActions .inner,
 .thread-list .list-item.selected:hover .list-column-HoverActions .inner,
@@ -484,6 +494,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 //  Mail Labels
 //====================================================
 
+// Make labels white on accent color when message is selected
 .thread-list .focused .mail-label, .draft-list .focused .mail-label,
 .thread-list.handler-split .list-item.selected .mail-label {
   background: @accent !important;
@@ -517,6 +528,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   max-width: 700px;
 }
 
+// Replacing focused state with theme accent
 #message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap.focused {
   box-shadow: 0 0 0 1px @accent;
 }
@@ -529,6 +541,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   border-bottom-right-radius: 6px;
 }
 
+// make action bar at bottom of composer a bit darker than background
 #message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap.focused .composer-action-bar-wrap {
   background: darken(@messagelist-bg, 1%);
 }
