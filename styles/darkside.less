@@ -88,6 +88,8 @@
   align-items: center;
   margin: 0;
   padding: 0;
+  min-width: 0;
+  width: 50px;
 }
 
 .toolbar-window-controls button {
@@ -140,7 +142,8 @@
   box-shadow: none;
   opacity: 0.5;
   padding: 0;
-  margin-right: 0;
+  margin: 0;
+  height: 100%;
   transition: opacity 200ms;
   &:hover {
     opacity: 1;
@@ -273,18 +276,42 @@
 
 .scrollbar-track {
   background: transparent;
-  width: 10px;
   border-left: none;
-  transition-delay: none;
+  width: 10px;
 }
 
+// transitioning background instead of opacity
+// so the location tooltip isn't affected
 .scrollbar-track .scrollbar-handle {
   background: fade(@sidebar, 20%);
-  border: none;
+  border: none !important;
+  cursor: -webkit-grab;
+  transition: background 300ms;
+}
+
+.scrollbar-track.dragging .scrollbar-handle {
+  background: fade(@sidebar, 50%);
+  cursor: -webkit-grabbing;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(-15px); }
+}
+
+.scrollbar-track .scrollbar-handle .tooltip .scroll-tooltip {
+  transform-origin: center right;
+  animation: slideInRight 300ms;
 }
 
 .flexbox-handle-horizontal div {
-  border-right: none;
+  box-shadow: none;
+}
+
+// Removing overlap of scrollbar and handle
+.column-ThreadList .flexbox-handle-horizontal.flexbox-handle-right {
+  right: -8px;
+  padding: 0;
 }
 
 // we now offset the margin on scrollbar
@@ -601,10 +628,9 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   background: transparent;
 }
 
-// Removing from flow to center title below
+// Centering vertially without magic numbers
 .layout-mode-popout .toolbar-window-controls {
   margin-top: 0;
-  width: 50px;
 }
 
 .sheet-toolbar .item-container .window-title {
