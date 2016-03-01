@@ -510,6 +510,29 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   border-left: 1px solid @border-color;
 }
 
+// Reducing width of message since the font size was reduced
+#message-list .message-subject-wrap,
+#message-list .message-item-wrap,
+#message-list .footer-reply-area-wrap {
+  max-width: 700px;
+}
+
+#message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap.focused {
+  box-shadow: 0 0 0 1px @accent;
+}
+
+.composer-inner-wrap .composer-action-bar-wrap,
+.composer-full-window .composer-inner-wrap .composer-action-bar-wrap {
+  background: darken(@messagelist-bg, 1%);
+  box-shadow: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+#message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap.focused .composer-action-bar-wrap {
+  background: darken(@messagelist-bg, 1%);
+}
+
 //====================================================
 //  Preferences
 //====================================================
