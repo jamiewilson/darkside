@@ -1,3 +1,5 @@
+#### [Important Notice](https://github.com/nylas/N1/releases/tag/0.4.14)<br>Darkside is now bundled with N1. New installation instructions coming soon.
+
 # Darkside
 A customizable, dark sidebar theme for [Nylas N1](https://nylas.com/n1).
 

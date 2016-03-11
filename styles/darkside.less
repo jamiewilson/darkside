@@ -39,8 +39,7 @@
 @swipe-snooze: #FBD852;
 @invalid: @close;
 
-@message-width: 700px;
-@sidebar-margin: 15px;
+@sidebar-margin: 20px;
 
 //====================================================
 //  Main Sidebar
@@ -49,7 +48,7 @@
 // Make sidebar and corresponding toolbar match
 .column-RootSidebar,
 .account-sidebar,
-.sheet-toolbar-container [data-column='0'] {
+.sheet-toolbar-container > div:nth-child(1) {
   height: 100%;
   background-color: @sidebar;
   // If NOT Retina display, subpixel-antialias fonts instead
@@ -79,7 +78,7 @@
 //====================================================
 
 // Match alignment for toolbar above sidebar
-.sheet-toolbar-container [data-column='0'] {
+.sheet-toolbar-container > div:nth-child(1) {
   padding-left: @sidebar-margin;
   padding-right: @sidebar-margin;
 }
@@ -172,7 +171,7 @@
 
 // Down arrow icon
 .account-switcher {
-  height: 16px;
+  height: 14px;
   width: 16px;
   top: 0;
   right: 0;
@@ -195,7 +194,7 @@
   background-image: none;
   background-color: @sidebar-text;
   -webkit-mask-repeat: no-repeat;
-  -webkit-mask-image: url(nylas://darkside-master/images/down-arrow.svg);
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="#FFF" d="M0 0h1l4 4 4-4h1v1L5 6 0 1z"/></svg>');
 }
 
 .account-sidebar .item,
@@ -332,7 +331,7 @@
 
 // Make corresponding toolbar match threadlist background
 .column-ThreadList,
-.sheet-toolbar-container [data-column='1'] {
+.sheet-toolbar-container > div:nth-child(2) {
   height: 100%;
   background: @threadlist-bg;
   border-bottom: 1px solid @border-color;
@@ -513,25 +512,50 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 
 // Make toolbars match panels
 .column-MessageList,
-.sheet-toolbar-container [data-column='2'],
+.sheet-toolbar-container > div:nth-child(3),
 .column-MessageListSidebar,
-.sheet-toolbar-container [data-column='3']  {
+.sheet-toolbar-container > div:nth-child(4)  {
   height: 100%;
   background: @messagelist-bg;
   border-left: 1px solid @border-color;
 }
 
-// Reducing width of message since the font size was reduced
-#message-list .message-subject-wrap,
-#message-list .message-item-wrap,
-#message-list .footer-reply-area-wrap,
-#message-list .minified-bundle .msg-lines {
-  max-width: @message-width;
+#message-list .message-header,
+#message-list .message-item-wrap.collapsed .message-item-white-wrap,
+#message-list .message-item-wrap.collapsed .message-item-area {
+  padding: 0;
 }
 
-#message-list .message-item-wrap {
-  margin-bottom: 12px;
-  padding-bottom: 0;
+// Make all padding uniform
+#message-list .message-item-area,
+#message-list .footer-reply-area-wrap .footer-reply-area {
+  padding: 20px !important;
+}
+
+// Adjusting position of thread participants toggle
+#message-list .header-toggle-control {
+  top: 6px !important;
+  left: -11px !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+// Reducing size and overriding invalid -webkit-mask-repeat- property
+#message-list .header-toggle-control img {
+  zoom: 0.35 !important;
+  -webkit-mask-repeat: no-repeat !important;
+}
+
+.message-participants.to-participants .collapsed-participants,
+.message-participants .expanded-participants .participant-type {
+  margin-top: 0;
+}
+.message-participants .from-label,
+.message-participants .to-label,
+.message-participants .cc-label,
+.message-participants .bcc-label {
+  margin-right: 6px;
 }
 
 #message-list .message-item-wrap .message-item-white-wrap,
@@ -549,10 +573,12 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   margin-top: 0;
 }
 
+// Collapsed Messages Pill Label
 #message-list .minified-bundle .num-messages {
   padding: 3px;
 }
 
+// remove margin for last message before reply
 #message-list .message-item-wrap.before-reply-area {
   margin-bottom: 0;
 }
@@ -562,6 +588,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   box-shadow: 0 0 0 1px @accent;
 }
 
+// Darken composer action bar to contrast from background
 .composer-inner-wrap .composer-action-bar-wrap,
 .composer-full-window .composer-inner-wrap .composer-action-bar-wrap {
   background: darken(@messagelist-bg, 1%);
@@ -592,11 +619,6 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 //====================================================
 //  Notifications
 //====================================================
-
-[name="Header"] {
-  z-index: 3 !important;
-  height: 0;
-}
 
 .notifications-sticky .notifications-sticky-item {
   background-color: @accent;
@@ -630,7 +652,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 
 .list-tabular .list-tabular-item.selected .checkmark .inner {
   background-color: @accent;
-  background-image: url(nylas://darkside-master/images/checkmark.svg);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="0 0 8 6"><path fill="#FFF" d="M7 0h1v1L3 6 0 3V2h1l2 2z"/></svg>');
   background-size: 8px 6px;
 }
 
@@ -689,17 +711,16 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   border-right: none;
 }
 
+// Toolbars in Single Panel mode and Preferences page
+span .sheet-toolbar-container,
+span .sheet-toolbar-container > div:nth-child(1),
+span .sheet-toolbar-container > div:nth-child(2),
+span .sheet-toolbar-container > div:nth-child(3),
 .sheet-toolbar-container.mode-popout,
-// mode-list toolbar
-[data-reactid=".1.0.1.$=1$1=02Thread=02toolbar"] [data-column='0'],
-// Preferences toolbar
-[data-reactid=".1.0.1.$=1$1=02Preferences=02toolbar"] [data-column='0'] {
-  background-image: none;
-  background-color: tint(@sidebar, 90%);
-}
-
-.sheet-toolbar-container.mode-popout [data-column='0'] {
+.sheet-toolbar-container.mode-popout > div:nth-child(1) {
   background: transparent;
+  background-color: tint(@sidebar, 90%);
+  border: none;
 }
 
 // Centering vertially without magic numbers
