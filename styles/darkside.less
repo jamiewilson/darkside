@@ -32,14 +32,15 @@
 @sidebar-text: desaturate(lighten(@sidebar, 40%), 75%);
 @active-sidebar-text: #FFFFFF;
 @border-color: fade(@sidebar, 10%);
-@close: #FF5F56;
+@danger: #FF5F56;
 @minimize: #FBD852;
 @maximize: #8DD07D;
 @swipe-archive: #8DD07D;
 @swipe-snooze: #FBD852;
-@invalid: @close;
+@swipe-trash: @danger;
+@invalid: @danger;
 
-@sidebar-margin: 20px;
+@sidebar-margin: 15px;
 
 //====================================================
 //  Main Sidebar
@@ -48,7 +49,7 @@
 // Make sidebar and corresponding toolbar match
 .column-RootSidebar,
 .account-sidebar,
-.sheet-toolbar-container > div:nth-child(1) {
+.toolbar-RootSidebar {
   height: 100%;
   background-color: @sidebar;
   // If NOT Retina display, subpixel-antialias fonts instead
@@ -76,12 +77,6 @@
 //====================================================
 //  Window Controls
 //====================================================
-
-// Match alignment for toolbar above sidebar
-.sheet-toolbar-container > div:nth-child(1) {
-  padding-left: @sidebar-margin;
-  padding-right: @sidebar-margin;
-}
 
 .toolbar-window-controls {
   display: flex;
@@ -114,7 +109,7 @@
 }
 
 .toolbar-window-controls .close {
-  background-color: @close;
+  background-color: @danger;
   background-image: none;
 }
 
@@ -331,7 +326,7 @@
 
 // Make corresponding toolbar match threadlist background
 .column-ThreadList,
-.sheet-toolbar-container > div:nth-child(2) {
+.toolbar-ThreadList {
   height: 100%;
   background: @threadlist-bg;
   border-bottom: 1px solid @border-color;
@@ -371,8 +366,16 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 }
 
 //====================================================
-//  Search & Suggestion Menu
+//  Inputs, Search & Suggestion Menu
 //====================================================
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+.search-bar .menu .header-container input:focus {
+  border-color: @accent;
+  box-shadow: 0 0 1.5px @accent;
+}
 
 .search-bar {
   margin: 7.5px;
@@ -473,7 +476,9 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 //  Swiping
 //====================================================
 
+.thread-list .swipe-backing.swipe-all,
 .thread-list .swipe-backing.swipe-archive,
+.draft-list .swipe-backing.swipe-all,
 .draft-list .swipe-backing.swipe-archive {
   background: @swipe-archive;
   &.confirmed {
@@ -486,6 +491,14 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   background: @swipe-snooze;
   &.confirmed {
     background: saturate(@swipe-snooze, 10%);
+  }
+}
+
+.thread-list .swipe-backing.swipe-trash,
+.draft-list .swipe-backing.swipe-trash {
+  background: @swipe-trash;
+  &.confirmed {
+    background: saturate(@swipe-trash, 10%);
   }
 }
 
@@ -512,21 +525,28 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 
 // Make toolbars match panels
 .column-MessageList,
-.sheet-toolbar-container > div:nth-child(3),
+.toolbar-MessageList,
 .column-MessageListSidebar,
-.sheet-toolbar-container > div:nth-child(4)  {
+.toolbar-MessageListSidebar {
   height: 100%;
   background: @messagelist-bg;
   border-left: 1px solid @border-color;
 }
 
+// Message List top and bottom spacing
+#message-list .messages-wrap .scroll-region-content-inner {
+  padding-top: 20px;
+  padding-bottom: 40vh;
+}
+
+// Reset padding
 #message-list .message-header,
 #message-list .message-item-wrap.collapsed .message-item-white-wrap,
 #message-list .message-item-wrap.collapsed .message-item-area {
   padding: 0;
 }
 
-// Make all padding uniform
+// Make padding uniform
 #message-list .message-item-area,
 #message-list .footer-reply-area-wrap .footer-reply-area {
   padding: 20px !important;
@@ -551,6 +571,7 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 .message-participants .expanded-participants .participant-type {
   margin-top: 0;
 }
+
 .message-participants .from-label,
 .message-participants .to-label,
 .message-participants .cc-label,
@@ -641,8 +662,14 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
 //====================================================
 
 // Make corresponding toolbar match threadlist background
-.draft-list {
+.draft-list,
+.toolbar-DraftList {
   background: @messagelist-bg;
+}
+
+.draft-list .list-container .list-item.selected,
+.draft-list .list-tabular .list-tabular-item.keyboard-cursor {
+  background: white;
 }
 
 .draft-list .list-tabular .list-tabular-item .checkmark .inner {
@@ -709,18 +736,32 @@ body.is-blurred .list-tabular .list-tabular-item.keyboard-cursor {
   right: 0;
   border-left: none;
   border-right: none;
+  background: none;
 }
 
-// Toolbars in Single Panel mode and Preferences page
-span .sheet-toolbar-container,
-span .sheet-toolbar-container > div:nth-child(1),
-span .sheet-toolbar-container > div:nth-child(2),
-span .sheet-toolbar-container > div:nth-child(3),
-.sheet-toolbar-container.mode-popout,
-.sheet-toolbar-container.mode-popout > div:nth-child(1) {
+// Match left and right alignment across all toolbars
+.toolbar-RootSidebar,
+.toolbar-MessageList,
+.toolbar-MessageListSidebar,
+.toolbar-Center,
+.toolbar-Preferences {
+  height: 100%;
+  padding-left: @sidebar-margin;
+  padding-right: @sidebar-margin;
+}
+
+// Slightly darker toolbar for Prefs, Single Panel Messages, and Popout
+.toolbar-Preferences,
+.layout-mode-list .toolbar-MessageList,
+.sheet-toolbar-container.mode-popout {
   background: transparent;
   background-color: tint(@sidebar, 90%);
   border: none;
+}
+
+// jackiehluo -> (themes): Fixes Windows button UI issues in #1649
+body.platform-win32 .sheet-toolbar-container .btn-toolbar:hover {
+  background: none;
 }
 
 // Centering vertially without magic numbers
@@ -738,8 +779,9 @@ span .sheet-toolbar-container > div:nth-child(3),
   box-shadow: 0 0 0 1px @border-color;
 }
 
-.sheet-toolbar .message-toolbar-items {
-  margin-right: 11.25px;
+// Let toolbar define outer padding/margin
+.sheet-toolbar .btn-toolbar:only-of-type {
+  margin-right: 0;
 }
 
 .btn-toolbar.mode-toggle.mode-false img.content-mask {
