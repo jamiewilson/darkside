@@ -144,6 +144,18 @@
   background-color: @sidebar-text;
 }
 
+// Activity List
+.toolbar-activity {
+  margin-right: 8px;
+}
+
+.activity-list-container {
+  .disclosure-triangle div {
+    margin-left: 4px;
+    margin-top: -2px;
+  }
+}
+
 //====================================================
 //  Sidebar Items
 //====================================================
@@ -324,6 +336,11 @@
   height: 100%;
   background: @threadlist-bg;
   border-bottom: 1px solid @border-color;
+}
+
+// jackiehluo -> Hide search bar when buttons appear in list mode
+.toolbar-ThreadList .selection-bar .inner {
+  background: @threadlist-bg;
 }
 
 .list-tabular .list-tabular-item {
@@ -598,9 +615,43 @@ input[type="email"]:focus,
   margin-bottom: 0;
 }
 
+//====================================================
+//  Composer
+//====================================================
+
+.tokenizing-field .token.invalid {
+  border-bottom: 1px solid @invalid;
+}
+
+.tokenizing-field .token.selected,
+.tokenizing-field .token.dragging {
+  background: @accent;
+  box-shadow: none;
+  border: none;
+}
+
+.tokenizing-field .token.invalid.selected,
+.tokenizing-field .token.invalid.dragging {
+  background: @invalid;
+}
+
 // Replacing focused state with theme accent
 #message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap.focused {
   box-shadow: 0 0 0 1px @accent;
+}
+
+// Composer attatchments hover style
+.file-wrap.file-image-wrap .file-preview .file-name-container {
+  background: rgba(49,48,66,0.25);
+  min-height: none;
+  &.file-name {
+    left: 0;
+    right: auto;
+    bottom: 0;
+    color: white;
+    background: rgba(49,48,66,0.75);
+    padding: 5px 15px;
+  }
 }
 
 // Darken composer action bar to contrast from background
@@ -689,26 +740,6 @@ input[type="email"]:focus,
   background-color: #f5f5f5;
   border: none;
   margin-top: 0;
-}
-
-//====================================================
-//  Composer
-//====================================================
-
-.tokenizing-field .token.invalid {
-  border-bottom: 1px solid @invalid;
-}
-
-.tokenizing-field .token.selected,
-.tokenizing-field .token.dragging {
-  background: @accent;
-  box-shadow: none;
-  border: none;
-}
-
-.tokenizing-field .token.invalid.selected,
-.tokenizing-field .token.invalid.dragging {
-  background: @invalid;
 }
 
 //====================================================
